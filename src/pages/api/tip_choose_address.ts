@@ -22,8 +22,8 @@ export default async function handler(
 <meta name="fc:frame" content="vNext">
 <meta name="fc:frame:image" content="">
 <meta name="fc:frame:post_url" content="https://6ed5-2406-7400-63-d14b-00-102.ngrok-free.app/api/handle_payload">
-<meta name="fc:frame:button:1" content="Input farcaster Id">
-<meta name="fc:frame:input:text" content="Input farcaster Id">
+<meta name="fc:frame:input:text" content="Input farcaster Username"/>
+<meta property="fc:frame:button:1" content="Confirm" />
 </head>
 <body>
 </body>
