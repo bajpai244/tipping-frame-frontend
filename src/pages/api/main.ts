@@ -1,7 +1,7 @@
 // @ts-nocheck
 import type { NextApiRequest, NextApiResponse } from 'next'
 import fs from "fs"
-import { NGROK_URL } from '@/constants';
+import { IMG_URL, NGROK_URL } from '@/constants';
 
 type ResponseData = {
   message: string
@@ -21,7 +21,7 @@ export default async function handler(
 <title>Vote Recorded</title>
 <meta property="og:title" content="Vote Recorded">
 <meta name="fc:frame" content="vNext">
-<meta name="fc:frame:image" content="https://i.seadn.io/gcs/files/0d84654921fd65e3c1723bc74d976a07.png?auto=format&dpr=1&w=512">
+<meta name="fc:frame:image" content="${IMG_URL}">
 <meta name="fc:frame:post_url" content="${NGROK_URL}/api/handle_payload">
 <meta property="fc:frame:button:1" content="Deposit" />
 <meta property="fc:frame:button:2" content="Tip" />

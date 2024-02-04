@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import fs from "fs"
 
 import { NeynarAPIClient } from "@neynar/nodejs-sdk";
-import { NGROK_URL } from '@/constants';
+import { NGROK_URL, IMG_URL } from '@/constants';
 import { getBalance } from '../../../utils/balance';
 
 type ResponseData = {
@@ -57,7 +57,7 @@ const tip_choose_address = `<!DOCTYPE html>
 <title>Vote Recorded</title>
 <meta property="og:title" content="Vote Recorded">
 <meta name="fc:frame" content="vNext">
-<meta name="fc:frame:image" content="https://i.seadn.io/gcs/files/0d84654921fd65e3c1723bc74d976a07.png?auto=format&dpr=1&w=512">
+<meta name="fc:frame:image" content="${IMG_URL}">
 <meta name="fc:frame:post_url" content="${NGROK_URL}/api/handle_tip">
 <meta name="fc:frame:input:text" content="Input farcaster Username"/>
 <meta property="fc:frame:button:1" content="10 wei" />
@@ -75,7 +75,7 @@ const withdraw_screen = `<!DOCTYPE html>
 <title>Vote Recorded</title>
 <meta property="og:title" content="Vote Recorded">
 <meta name="fc:frame" content="vNext">
-<meta name="fc:frame:image" content="https://i.seadn.io/gcs/files/0d84654921fd65e3c1723bc74d976a07.png?auto=format&dpr=1&w=512">
+<meta name="fc:frame:image" content="${IMG_URL}">
 <meta name="fc:frame:post_url" content="${NGROK_URL}/api/handle_withdraw">
 <meta name="fc:frame:input:text" content="Input Starknet Address"/>
 <meta property="fc:frame:button:1" content="withdraw" />
@@ -89,7 +89,7 @@ const showBalance = (balance: number) => {
  return `
  <meta property="og:title" content="Vote Recorded">
 <meta name="fc:frame" content="vNext">
-<meta name="fc:frame:image" content="https://i.seadn.io/gcs/files/0d84654921fd65e3c1723bc74d976a07.png?auto=format&dpr=1&w=512">
+<meta name="fc:frame:image" content="${IMG_URL}">
 <meta name="fc:frame:post_url" content="${NGROK_URL}/api/main">
 <meta property="fc:frame:button:1" content="your balance is ${balance}" />
 <meta property="fc:frame:button:2" content="back to home" />`
