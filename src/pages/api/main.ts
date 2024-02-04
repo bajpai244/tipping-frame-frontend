@@ -21,7 +21,7 @@ export default async function handler(
 <meta property="og:title" content="Vote Recorded">
 <meta name="fc:frame" content="vNext">
 <meta name="fc:frame:image" content="">
-<meta name="fc:frame:post_url" content="https://6ed5-2406-7400-63-d14b-00-102.ngrok-free.app/api/handle_payload">
+<meta name="fc:frame:post_url" content="https://825b-2406-7400-63-d14b-00-102.ngrok-free.app/api/handle_payload">
 <meta property="fc:frame:button:1" content="Deposit" />
 <meta property="fc:frame:button:2" content="Tip" />
 <meta property="fc:frame:button:3" content="Balance" />

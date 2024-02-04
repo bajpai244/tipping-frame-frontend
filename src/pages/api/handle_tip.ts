@@ -1,9 +1,10 @@
 // @ts-nocheck
 import type { NextApiRequest, NextApiResponse } from 'next'
-import fs from "fs"
+import { NGROK_URL } from '@/constants';
 
 import { NeynarAPIClient } from "@neynar/nodejs-sdk";
-import { NGROK_URL } from '@/constants';
+import { deposit } from '../../../utils/deposit';
+import { tip } from '../../../utils/tip';
 
 type ResponseData = {
   message: string
@@ -14,16 +15,11 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
 
-  console.log("heyyyyyyyy");
-
   res.setHeader('Content-Type', 'text/html');
 
 // make sure to set your NEYNAR_API_KEY .env
 const client = new NeynarAPIClient(process.env.NEYNAR_API_KEY);
 const validatedMessage = await client.validateFrameAction(req.body.trustedData.messageBytes);
-
-
-console.log('validatedMessage', validatedMessage);
 
 const valid = validatedMessage.valid;
 const userFid = validatedMessage.action?.interactor.fid;
@@ -35,28 +31,44 @@ console.log('user fid', userFid);
 console.log('tapped button', tapped_button);
 console.log('input', input);
 
-console.log('validated message', validatedMessage);
+const recipient_fId = (await client.lookupUserByUsername(input)).result.user.fid;
+console.log('recipient fid', recipient_fId);
 
-// user wants to tip
-if (tapped_button == 2) {
-  res.status(200).send(tip_choose_address);
+if(valid) {
+  let amount;
+  switch (tapped_button) {
+    case 1:
+      amount = 10;
+      break;
+    case 2:
+      amount = 100;
+      break;
+    case 3:
+      amount = 1000;
+      break;
+    case 4:
+      amount = 50000;
+      break;
+    default:
+      break;
+  }
+
+  tip(userFid, recipient_fId, amount);
+  res.send(payment_success);
+  }
 }
-}
 
 
-const tip_choose_address = `<!DOCTYPE html>
+
+const payment_success = `<!DOCTYPE html>
 <html>
 <head>
 <title>Vote Recorded</title>
 <meta property="og:title" content="Vote Recorded">
 <meta name="fc:frame" content="vNext">
 <meta name="fc:frame:image" content="https://i.seadn.io/gcs/files/0d84654921fd65e3c1723bc74d976a07.png?auto=format&dpr=1&w=512">
-<meta name="fc:frame:post_url" content="${NGROK_URL}/api/handle_tip">
-<meta name="fc:frame:input:text" content="Input farcaster Username"/>
-<meta property="fc:frame:button:1" content="10 wei" />
-<meta property="fc:frame:button:2" content="100 wei" />
-<meta property="fc:frame:button:3" content="1000 wei" />
-<meta property="fc:frame:button:4" content="50000 wei" />
+<meta name="fc:frame:post_url" content="${NGROK_URL}/api/main">
+<meta property="fc:frame:button:1" content="Payment is successful!" />
 </head>
 <body>
 </body>
