@@ -4,6 +4,7 @@ import fs from "fs"
 
 import { NeynarAPIClient } from "@neynar/nodejs-sdk";
 import { NGROK_URL } from '@/constants';
+import { getBalance } from '../../../utils/balance';
 
 type ResponseData = {
   message: string
@@ -41,7 +42,13 @@ console.log('validated message', validatedMessage);
 if (tapped_button == 2) {
   res.status(200).send(tip_choose_address);
 }
+else if (tapped_button == 3) {
+  const balance = await getBalance(userFid);
+  res.status(200).send(showBalance(balance));
 }
+else if (tapped_button == 4) {
+  res.status(200).send(withdraw_screen);
+}}
 
 
 const tip_choose_address = `<!DOCTYPE html>
@@ -61,3 +68,29 @@ const tip_choose_address = `<!DOCTYPE html>
 <body>
 </body>
 </html>`
+
+const withdraw_screen = `<!DOCTYPE html>
+<html>
+<head>
+<title>Vote Recorded</title>
+<meta property="og:title" content="Vote Recorded">
+<meta name="fc:frame" content="vNext">
+<meta name="fc:frame:image" content="https://i.seadn.io/gcs/files/0d84654921fd65e3c1723bc74d976a07.png?auto=format&dpr=1&w=512">
+<meta name="fc:frame:post_url" content="${NGROK_URL}/api/handle_withdraw">
+<meta name="fc:frame:input:text" content="Input Starknet Address"/>
+<meta property="fc:frame:button:1" content="withdraw" />
+</head>
+<body>
+</body>
+</html>`;
+
+
+const showBalance = (balance: number) => {
+ return `
+ <meta property="og:title" content="Vote Recorded">
+<meta name="fc:frame" content="vNext">
+<meta name="fc:frame:image" content="https://i.seadn.io/gcs/files/0d84654921fd65e3c1723bc74d976a07.png?auto=format&dpr=1&w=512">
+<meta name="fc:frame:post_url" content="${NGROK_URL}/api/main">
+<meta property="fc:frame:button:1" content="your balance is ${balance}" />
+<meta property="fc:frame:button:2" content="back to home" />`
+}

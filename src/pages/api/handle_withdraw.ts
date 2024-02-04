@@ -3,8 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { NGROK_URL } from '@/constants';
 
 import { NeynarAPIClient } from "@neynar/nodejs-sdk";
-import { deposit } from '../../../utils/deposit';
-import { tip } from '../../../utils/tip';
+import { withdraw } from '../../../utils/withdraw';
 
 type ResponseData = {
   message: string
@@ -14,6 +13,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
+
+    console.log("reaching here.");
 
   res.setHeader('Content-Type', 'text/html');
 
@@ -31,29 +32,8 @@ console.log('user fid', userFid);
 console.log('tapped button', tapped_button);
 console.log('input', input);
 
-const recipient_fId = (await client.lookupUserByUsername(input)).result.user.fid;
-console.log('recipient fid', recipient_fId);
-
 if(valid) {
-  let amount;
-  switch (tapped_button) {
-    case 1:
-      amount = 10;
-      break;
-    case 2:
-      amount = 100;
-      break;
-    case 3:
-      amount = 1000;
-      break;
-    case 4:
-      amount = 50000;
-      break;
-    default:
-      break;
-  }
-
-  tip(userFid, recipient_fId, amount);
+  withdraw(userFid, input);
   res.send(payment_success);
   }
 }
@@ -68,7 +48,7 @@ const payment_success = `<!DOCTYPE html>
 <meta name="fc:frame" content="vNext">
 <meta name="fc:frame:image" content="https://i.seadn.io/gcs/files/0d84654921fd65e3c1723bc74d976a07.png?auto=format&dpr=1&w=512">
 <meta name="fc:frame:post_url" content="${NGROK_URL}/api/main">
-<meta property="fc:frame:button:1" content="Payment is successful!" />
+<meta property="fc:frame:button:1" content="Withdraw is successful!" />
 <meta property="fc:frame:button:2" content="back to home" />
 </head>
 <body>
