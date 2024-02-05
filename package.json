@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@neynar/nodejs-sdk": "^1.9.4",
+    "@starknet-react/chains": "^0.1.6",
+    "@starknet-react/core": "^2.2.4",
+    "get-starknet": "^3.0.1",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
